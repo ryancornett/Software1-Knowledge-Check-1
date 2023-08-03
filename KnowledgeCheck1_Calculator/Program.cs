@@ -17,8 +17,15 @@ namespace KnowledgeCheck1_Calculator
                 case "1":
                     Console.WriteLine("Enter 2 integers to add");
                     var numbers = calculator.GetNumbers();
-
-                    
+                    try
+                    {
+                        Console.Write($"{numbers[0]} + {numbers[1]} = ");
+                        Console.Write(calculator.Add(numbers[0], numbers[1]));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("One or more of the numbers is not an int");
+                    }
                     break;
 
                 case "2":
