@@ -1,82 +1,30 @@
-﻿using System;
+﻿using KnowledgeCheck1_Calculator;
+using Action;
+using System;
 
-namespace KnowledgeCheck1_Calculator
+var calc = new Calculator();
+var act = new Actions();
+
+while (Utilities.run)
 {
-    class Program
+    string input = Utilities.DisplayApp();
+    if (int.TryParse(input, out int selection))
     {
-        static void Main(string[] args)
+        if (selection >= 1 && selection < 5)
         {
-
-            Console.WriteLine("Hello. Press 1 for addition, 2 for subtraction, 3 for multiplication, and 4 for division");
-
-            var input = Console.ReadLine();
-            var calculator = new Calculator();
-
-            switch (input)
+            var numbers = act.PromptUser();
+            var result = calc.Operate(selection, numbers[0], numbers[1]);
+            if (Utilities.valid == true)
             {
-                case "1":
-                    Console.WriteLine("Enter 2 integers to add");
-                    var numbers = calculator.GetNumbers();
-                    try
-                    {
-                        Console.Write($"{numbers[0]} + {numbers[1]} = ");
-                        Console.Write(calculator.Add(numbers[0], numbers[1]));
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("One or more of the numbers is not an int");
-                    }
-                    break;
-
-                case "2":
-                    Console.WriteLine("Enter 2 integers to subtract");
-                    numbers = calculator.GetNumbers();
-
-                    try
-                    {
-                        Console.Write($"{numbers[0]} - {numbers[1]} = ");
-                        Console.Write(calculator.Subtract(numbers[0], numbers[1]));
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("One or more of the numbers is not an int");
-                    }
-                    break;
-
-                case "3":
-                    Console.WriteLine("Enter 2 integers to multiply");
-                    numbers = calculator.GetNumbers();
-
-                    try
-                    {
-                        Console.Write($"{numbers[0]} * {numbers[1]} = ");
-                        Console.Write(calculator.Multiply(numbers[0], numbers[1]));
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("One or more of the numbers is not an int");
-                    }
-                    break;
-
-                case "4":
-                    Console.WriteLine("Enter 2 integers to divide");
-                    numbers = calculator.GetNumbers();
-
-                    try
-                    {
-                        Console.Write($"{numbers[0]} / {numbers[1]} = ");
-                        Console.Write(calculator.Divide(numbers[0], numbers[1]));
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("One or more of the numbers is not an int");
-                    }
-                    break;
-
-                default:
-                    Console.WriteLine("Unknown input");
-                    break;
+                Console.WriteLine($"{numbers[0]} {Utilities.operation[selection]} {numbers[1]} = {result}");
             }
         }
+        else if (selection == 0)
+        {
+            Utilities.run = false;
+            Environment.Exit(0);
+        }
+        else Utilities.InvalidInputMsg("You must select 0, 1, 2, 3, or 4.");
     }
+    else Utilities.InvalidInputMsg();
 }
